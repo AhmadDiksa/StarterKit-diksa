@@ -10,7 +10,7 @@
                 <header class="mb-4">
                     <h1 class="fw-bolder mb-1">{{ $berita->title }}</h1>
                     <div class="text-muted fst-italic mb-2">
-                        Dipublikasikan pada {{ $berita->published_at->format('d F Y') }} oleh {{ $berita->author->name }}
+Dipublikasikan pada {{ optional($berita->published_at)->format('d F Y') ?? 'Tanggal tidak tersedia' }} oleh {{ $berita->author->name }}
                     </div>
                     <a class="badge bg-secondary text-decoration-none link-light" href="#!">
                         {{ $berita->category->name }}

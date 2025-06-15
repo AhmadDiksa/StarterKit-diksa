@@ -334,13 +334,26 @@ return [
             'text' => 'Manajemen Kategori',
             'route'  => 'kategori.index', // Asumsi Anda sudah membuat CRUD Kategori
             'icon' => 'fas fa-fw fa-tags',
+            'role' => 'Admin',
         ],
 
         // Menu untuk User (Hanya Admin)
         [
             'text'    => 'Manajemen User',
             'icon'    => 'fas fa-fw fa-users',
-            // Tambahkan submenu jika diperlukan
+            'role'     => 'Admin',
+            'submenu' => [
+                [
+                    'text' => 'Daftar User',
+                    'route'  => 'users.index',
+                    'icon'  => 'fas fa-fw fa-list',
+                ],
+                [
+                    'text' => 'Tambah User',
+                    'route'  => 'users.create',
+                    'icon'  => 'fas fa-fw fa-user-plus',
+                ],
+            ],
         ],
     ],
     // 'menu' => [

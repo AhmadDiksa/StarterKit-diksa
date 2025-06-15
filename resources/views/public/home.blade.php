@@ -28,7 +28,7 @@
                             <small class="text-muted">
                                 Kategori: <span class="badge bg-primary">{{ $berita->category->name }}</span> |
                                 Oleh: {{ $berita->author->name }} |
-                                {{ $berita->published_at->diffForHumans() }}
+{{ optional($berita->published_at)->diffForHumans() }}
                             </small>
                         </div>
                     </a>
