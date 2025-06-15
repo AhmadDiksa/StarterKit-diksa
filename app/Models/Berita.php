@@ -9,6 +9,16 @@ class Berita extends Model
 {
     /** @use HasFactory<\Database\Factories\BeritaFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'title',
+        'slug',
+        'category_id',
+        'content',
+        'image',
+        'user_id',
+        'status',
+    ];
     
     public function category()
     {

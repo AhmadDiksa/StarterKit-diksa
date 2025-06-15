@@ -298,16 +298,21 @@ return [
     |
     */
 
-    // config/adminlte.php
     'menu' => [
-        // Menu utama
+        // Header
+        [
+            'header' => 'MAIN NAVIGATION',
+            'can' => ['Admin', 'Editor', 'Wartawan'], // Hanya tampil untuk role ini
+        ],
+
+        // Menu untuk Dashboard
         [
             'text' => 'Dashboard',
             'route'  => 'dashboard',
             'icon' => 'fas fa-fw fa-tachometer-alt',
         ],
 
-        // MENU UNTUK BERITA
+        // Menu untuk Berita
         [
             'text'    => 'Manajemen Berita',
             'icon'    => 'far fa-fw fa-newspaper',
@@ -327,24 +332,68 @@ return [
             ],
         ],
 
-        // MENU UNTUK KATEGORI (HANYA ADMIN)
+        // Menu untuk Kategori (Hanya Admin)
         [
             'text' => 'Manajemen Kategori',
             'route'  => 'kategori.index', // Asumsi Anda sudah membuat CRUD Kategori
             'icon' => 'fas fa-fw fa-tags',
-            'can' => 'Admin',
+            'can' => ['Admin'],
         ],
 
-        // MENU UNTUK USER (HANYA ADMIN)
+        // Menu untuk User (Hanya Admin)
         [
             'text'    => 'Manajemen User',
             'icon'    => 'fas fa-fw fa-users',
-            'can'     => 'Admin',
-            'submenu' => [
-                // ... submenu untuk tambah user, daftar user, dll.
-            ],
+            'can'     => ['Admin'],
+            // Tambahkan submenu jika diperlukan
         ],
     ],
+    // 'menu' => [
+    //     // Menu utama
+    //     [
+    //         'text' => 'Dashboard',
+    //         'route'  => 'dashboard',
+    //         'icon' => 'fas fa-fw fa-tachometer-alt',
+    //     ],
+
+    //     // MENU UNTUK BERITA
+    //     [
+    //         'text'    => 'Manajemen Berita',
+    //         'icon'    => 'far fa-fw fa-newspaper',
+    //         'can'     => ['Admin', 'Editor', 'Wartawan'], // Hanya tampil untuk role ini
+    //         'submenu' => [
+    //             [
+    //                 'text' => 'Tulis Berita Baru',
+    //                 'route'  => 'berita.create',
+    //                 'icon'  => 'fas fa-fw fa-pen',
+    //                 'can'  => ['Admin', 'Wartawan'], // Editor tidak bisa menulis berita baru
+    //             ],
+    //             [
+    //                 'text' => 'Daftar Berita',
+    //                 'route'  => 'berita.index',
+    //                 'icon'  => 'fas fa-fw fa-list',
+    //             ],
+    //         ],
+    //     ],
+
+    //     // MENU UNTUK KATEGORI (HANYA ADMIN)
+    //     [
+    //         'text' => 'Manajemen Kategori',
+    //         'route'  => 'kategori.index', // Asumsi Anda sudah membuat CRUD Kategori
+    //         'icon' => 'fas fa-fw fa-tags',
+    //         'can' => 'Admin',
+    //     ],
+
+    //     // MENU UNTUK USER (HANYA ADMIN)
+    //     [
+    //         'text'    => 'Manajemen User',
+    //         'icon'    => 'fas fa-fw fa-users',
+    //         'can'     => 'Admin',
+    //         'submenu' => [
+    //             // ... submenu untuk tambah user, daftar user, dll.
+    //         ],
+    //     ],
+    // ],
 
     /*
     |--------------------------------------------------------------------------
