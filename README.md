@@ -1,66 +1,72 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+## Dokumentasi Teknis
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+### Struktur Folder
 
-## About Laravel
+- `app/Http/Controllers`  
+  Berisi controller utama, seperti [`BeritaController`](app/Http/Controllers/BeritaController.php), [`PublicController`](app/Http/Controllers/PublicController.php), dan controller admin.
+- `app/Models`  
+  Model Eloquent, misal [`Berita`](app/Models/Berita.php), User, Category.
+- `resources/views`  
+  Blade template untuk tampilan publik (`public/`), dashboard admin (`admin/`), dan berita (`berita/`).
+- `routes/web.php`  
+  Semua rute aplikasi, termasuk rute publik, dashboard, berita, user, kategori, dan autentikasi.
+- `database/migrations`  
+  Migrasi database, misal [2025_06_15_002610_create_beritas_table.php](database/migrations/2025_06_15_002610_create_beritas_table.php).
+- `database/seeders`  
+  Seeder data awal, misal [`DatabaseSeeder`](database/seeders/DatabaseSeeder.php).
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Alur Fitur Utama
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+#### 1. Manajemen Berita
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Menulis Berita:**  
+  Wartawan/Admin dapat menulis berita melalui form di [`resources/views/berita/create.blade.php`](resources/views/berita/create.blade.php). Data disimpan oleh [`BeritaController@store`](app/Http/Controllers/BeritaController.php).
+- **Approval Berita:**  
+  Editor/Admin dapat approve/reject berita melalui tombol di [`resources/views/berita/index.blade.php`](resources/views/berita/index.blade.php) yang memanggil [`BeritaController@approve`](app/Http/Controllers/BeritaController.php) dan [`BeritaController@reject`](app/Http/Controllers/BeritaController.php).
+- **Tampilan Publik:**  
+  Berita yang sudah publish ditampilkan di halaman utama oleh [`PublicController@index`](app/Http/Controllers/PublicController.php) dan detailnya oleh [`PublicController@show`](app/Http/Controllers/PublicController.php).
 
-## Learning Laravel
+#### 2. Manajemen User & Role
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- **Role & Permission:**  
+  Menggunakan package [spatie/laravel-permission](https://github.com/spatie/laravel-permission).  
+  Middleware role sudah di-alias di [`bootstrap/app.php`](bootstrap/app.php).
+- **Manajemen User:**  
+  Hanya Admin yang dapat mengakses menu user di dashboard ([`config/adminlte.php`](config/adminlte.php)).  
+  Form edit user dan role ada di [`resources/views/admin/users/edit.blade.php`](resources/views/admin/users/edit.blade.php).
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+#### 3. Manajemen Kategori
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- **CRUD Kategori:**  
+  Hanya Admin yang dapat mengelola kategori melalui menu di dashboard.  
+  Rute dan controller: [`CategoryController`](app/Http/Controllers/CategoryController.php).
 
-## Laravel Sponsors
+#### 4. Autentikasi & Socialite
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- **Autentikasi:**  
+  Menggunakan Laravel Breeze (login, register, reset password).
+- **Socialite:**  
+  Login dengan Google/Github tersedia di rute `/auth/redirect/{provider}` dan `/auth/callback/{provider}` ([`routes/web.php`](routes/web.php)).
 
-### Premium Partners
+### Rute Penting
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+- Publik: `/`, `/berita/{slug}`, `/kategori/{category:slug}`
+- Dashboard: `/dashboard`
+- Berita: `/berita`, `/berita/new/create`, `/berita/{id}/edit`
+- User: `/users`
+- Kategori: `/kategori`
 
-## Contributing
+### Migrasi & Seeder
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- Struktur tabel berita: [2025_06_15_002610_create_beritas_table.php](database/migrations/2025_06_15_002610_create_beritas_table.php)
+- Seeder role, kategori, dan user dummy dapat diaktifkan di [`DatabaseSeeder`](database/seeders/DatabaseSeeder.php).
 
-## Code of Conduct
+### Konfigurasi Tambahan
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- Konfigurasi AdminLTE: [`config/adminlte.php`](config/adminlte.php)
+- Konfigurasi database: [`config/database.php`](config/database.php)
+- Konfigurasi cache, mail, logging, dsb: [`config/`](config/)
 
-## Security Vulnerabilities
+---
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Untuk detail lebih lanjut, silakan baca komentar di setiap file controller dan
