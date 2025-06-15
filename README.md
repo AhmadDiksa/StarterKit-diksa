@@ -1,3 +1,19 @@
+## Screenshots
+
+### Halaman Utama
+![Halaman Utama](public/images/screenshots/home.png)
+
+### Dashboard Admin
+![Dashboard Admin](public/images/screenshots/dashboard.png)
+
+### Manajemen Berita
+![Manajemen Berita](public/images/screenshots/berita.png)
+
+### Manajemen User
+![Manajemen User](public/images/screenshots/users.png)
+
+---
+
 ## Dokumentasi Teknis
 
 ### Struktur Folder

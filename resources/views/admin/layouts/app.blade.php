@@ -84,7 +84,40 @@
 
             <!-- Sidebar Menu -->
             <nav class="mt-2">
-                {!! Menu::render() !!}
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                    @foreach(config('adminlte.menu') as $item)
+                        @if(isset($item['header']))
+                            <li class="nav-header">{{ $item['header'] }}</li>
+                        @elseif(isset($item['submenu']))
+                            <li class="nav-item has-treeview">
+                                <a href="#" class="nav-link">
+                                    <i class="{{ $item['icon'] }}"></i>
+                                    <p>
+                                        {{ $item['text'] }}
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    @foreach($item['submenu'] as $submenu)
+                                        <li class="nav-item">
+                                            <a href="{{ route($submenu['route']) }}" class="nav-link {{ request()->routeIs($submenu['route']) ? 'active' : '' }}">
+                                                <i class="{{ $submenu['icon'] }}"></i>
+                                                <p>{{ $submenu['text'] }}</p>
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </li>
+                        @else
+                            <li class="nav-item">
+                                <a href="{{ isset($item['route']) ? route($item['route']) : '#' }}" class="nav-link {{ isset($item['route']) && request()->routeIs($item['route']) ? 'active' : '' }}">
+                                    <i class="{{ $item['icon'] }}"></i>
+                                    <p>{{ $item['text'] }}</p>
+                                </a>
+                            </li>
+                        @endif
+                    @endforeach
+                </ul>
             </nav>
             <!-- /.sidebar-menu -->
         </div>
