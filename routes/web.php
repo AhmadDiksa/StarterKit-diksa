@@ -35,6 +35,18 @@ Route::get('/kategori/{category:slug}', [PublicController::class, 'category'])->
 // File auth.php berisi rute untuk login, register, forgot password, dll.
 require __DIR__.'/auth.php';
 
+//=======================================================================
+// 4. RUTE SOCIALITE (LOGIN DENGAN GOOGLE, GITHUB, DLL.)
+//=======================================================================
+
+use App\Http\Controllers\Auth\SocialiteController;
+
+Route::get('/auth/redirect/{provider}', [SocialiteController::class, 'redirect'])
+    ->name('socialite.redirect');
+
+Route::get('/auth/callback/{provider}', [SocialiteController::class, 'callback'])
+    ->name('socialite.callback');
+
 
 //=======================================================================
 // 3. RUTE AREA ADMIN/DASHBOARD (WAJIB LOGIN)

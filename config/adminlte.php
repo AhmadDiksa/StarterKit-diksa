@@ -302,7 +302,6 @@ return [
         // Header
         [
             'header' => 'MAIN NAVIGATION',
-            'can' => ['Admin', 'Editor', 'Wartawan'], // Hanya tampil untuk role ini
         ],
 
         // Menu untuk Dashboard
@@ -316,13 +315,11 @@ return [
         [
             'text'    => 'Manajemen Berita',
             'icon'    => 'far fa-fw fa-newspaper',
-            'can'     => ['Admin', 'Editor', 'Wartawan'], // Hanya tampil untuk role ini
             'submenu' => [
                 [
                     'text' => 'Tulis Berita Baru',
                     'route'  => 'berita.create',
                     'icon'  => 'fas fa-fw fa-pen',
-                    'can'  => ['Admin', 'Wartawan'], // Editor tidak bisa menulis berita baru
                 ],
                 [
                     'text' => 'Daftar Berita',
@@ -337,14 +334,12 @@ return [
             'text' => 'Manajemen Kategori',
             'route'  => 'kategori.index', // Asumsi Anda sudah membuat CRUD Kategori
             'icon' => 'fas fa-fw fa-tags',
-            'can' => ['Admin'],
         ],
 
         // Menu untuk User (Hanya Admin)
         [
             'text'    => 'Manajemen User',
             'icon'    => 'fas fa-fw fa-users',
-            'can'     => ['Admin'],
             // Tambahkan submenu jika diperlukan
         ],
     ],
